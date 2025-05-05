@@ -1,0 +1,61 @@
+
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 100
+
+// Adjacency matrix to represent the graph
+int adjacencyMatrix[MAX_NODES][MAX_NODES];
+
+// Visited array to keep track of visited nodes during DFS
+bool visited[MAX_NODES];
+
+// Function to perform depth-first search (DFS) traversal
+void DFS(int node, int numNodes) {
+    printf("%d ", node);
+    visited[node] = true;
+
+    for (int i = 0; i < numNodes; ++i) {
+        if (adjacencyMatrix[node][i] == 1 && !visited[i]) {
+            DFS(i, numNodes);
+        }
+    }
+}
+
+int main() {
+    int numNodes, numEdges;
+
+    // Input the number of nodes and edges
+    printf("Enter the number of nodes and edges: ");
+    scanf("%d %d", &numNodes, &numEdges);
+
+    // Initialize the adjacency matrix and visited array
+    for (int i = 0; i < MAX_NODES; ++i) {
+        visited[i] = false;
+        for (int j = 0; j < MAX_NODES; ++j) {
+            adjacencyMatrix[i][j] = 0;
+        }
+    }
+
+    // Input the edges of the graph
+    printf("Enter the edges (node1 node2):\n");
+    for (int i = 0; i < numEdges; ++i) {
+        int node1, node2;
+        scanf("%d %d", &node1, &node2);
+        adjacencyMatrix[node1][node2] = 1;
+        adjacencyMatrix[node2][node1] = 1; // Assuming an undirected graph
+    }
+
+    // Choose a starting node for DFS
+    int startNode;
+    printf("Enter the starting node for DFS: ");
+    scanf("%d", &startNode);
+
+    // Perform DFS traversal from the chosen node
+    printf("DFS Traversal starting from node %d: ", startNode);
+    DFS(startNode, numNodes);
+    printf("\n");
+
+    return 0;
+}
+
